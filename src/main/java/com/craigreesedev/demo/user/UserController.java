@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("")
     public User getUser(@RequestParam String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUserName(userName).orElseThrow(() -> new IllegalArgumentException("User not found with userName: " + userName));
     }
 
     @GetMapping("/all")
