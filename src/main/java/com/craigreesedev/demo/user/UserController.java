@@ -46,4 +46,9 @@ public class UserController {
 
         return userRepository.save(existingUser);
     }
+
+    @PostMapping("/delete")
+    public void deleteUser(@RequestParam Long id) {
+        userRepository.delete(userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id)));
+    }
 }
