@@ -27,6 +27,13 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PostMapping("/create")
+    public User createUser(@RequestParam String userName,
+            @RequestParam String fullName) {
+        User newUser = new User(userName, fullName);
+        return userRepository.save(newUser);
+    }
+
     @PostMapping("/update")
     public User updateUser(@RequestParam Long id,
             @RequestParam String userName,
