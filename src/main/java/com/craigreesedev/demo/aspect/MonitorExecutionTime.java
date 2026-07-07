@@ -22,7 +22,8 @@ public class MonitorExecutionTime {
 
         // TODO: update this to be a CSV-style log file with timestamp, method name, execution time
         try (BufferedWriter output = new BufferedWriter(new FileWriter(LOG_FILE_PATH, true))) {
-            output.write("Execution time (ms): %d".formatted(endTime - startTime));
+            // Write timestamp, method name, and execution time to the log file in CSV format
+            output.write("%d,%s,%d".formatted(System.currentTimeMillis(), pjp.getSignature().toShortString(), endTime - startTime));
             output.newLine();
         } catch (Exception e) {
             System.out.println("Error writing to log file");
