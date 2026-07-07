@@ -1,5 +1,7 @@
 package com.craigreesedev.demo.config;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,13 @@ public class LogFileInitializer implements CommandLineRunner {
             }
         } catch (Exception e) {
             System.out.println("Error creating log file");
+        }
+
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toString(), true))) {
+            output.write("timestamp,method_name,execution_time_ms");
+            output.newLine();
+        } catch (Exception e) {
+            System.out.println("Error writing to log file");
         }
     }
 }
