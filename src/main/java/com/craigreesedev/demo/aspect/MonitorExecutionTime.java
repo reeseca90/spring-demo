@@ -1,5 +1,6 @@
 package com.craigreesedev.demo.aspect;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.nio.file.Paths;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class MonitorExecutionTime {
-    final static String logFilePath = Paths.get("").toAbsolutePath().toString() + "/log";
+    static final String LOG_FILE_PATH = Paths.get("").toAbsolutePath().toString() + "/log";
 
     @Around("execution(* com.craigreesedev.demo.user.UserController.*(..))")
     public Object monitorExecutionTime(ProceedingJoinPoint pjp) throws Throwable {
@@ -20,8 +21,9 @@ public class MonitorExecutionTime {
         long endTime = System.currentTimeMillis();
 
         // TODO: update this to be a CSV-style log file with timestamp, method name, execution time
-        try (FileWriter output = new FileWriter(logFilePath)) {
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(LOG_FILE_PATH, true))) {
             output.write("Execution time (ms): %d".formatted(endTime - startTime));
+            output.newLine();
         } catch (Exception e) {
             System.out.println("Error writing to log file");
         }
